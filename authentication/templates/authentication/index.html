@@ -6,6 +6,61 @@
 <link rel="stylesheet" type="text/css" href="{% static 'authentication/cover.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'authentication/dashboard.css' %}">
 <script src="{% static 'js/bootstrap.js' %}"></script>
+
+<div style="display: none" id="jsonData" data-json="{{ data }}"></div>
+
+<!-- Begin Modal Body -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div style="display: flex; flex-direction: column">
+          <h5 class="modal-title text-dark" id="exampleModalLabel">Add an Entry</h5>
+          <p class="text-dark">The values correspond to the 7 days before and including the date entered below</p>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'authentication:index' %}" method="post">
+      {% csrf_token %}
+      <div class="modal-body">
+            <div class="row">
+              <input type="date" class="form-control" name="end_date" placeholder="Date">
+            </div>
+            <div class="row">
+              <input type="text" class="form-control" name="total_calories" placeholder="Total Calories">
+            </div>
+            <div class="row">
+              <input type="text" class="form-control" name="total_sleep" placeholder="Total Sleep (in minutes)">
+            </div>
+            <div class="row">
+              <input type="text" class="form-control" name="total_chest" placeholder="Total Amount of sets for chest done above 70% 1RM">
+            </div>
+            <div class="row">
+              <input type="text" class="form-control" name="total_shoulders" placeholder="Total Amount of sets for shoulders done above 70% 1RM">
+            </div>
+            <div class="row">
+              <input type="text" class="form-control" name="total_triceps" placeholder="Total Amount of sets for triceps done above 70% 1RM">
+            </div>
+              <div class="row">
+                <input type="text" class="form-control" name="total_protein" placeholder="Total Amount of protein consumed (grams)">
+              </div>
+              <div class="row">
+                <input type="text" class="form-control" name="total_carbs" placeholder="Total Amount of carbs consumed (grams)">
+              </div>
+              <div class="row">
+                <input type="text" class="form-control" name="bench_max" placeholder="Bench Max (in lbs)">
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn bg-dark text-light">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!-- End Modal Body -->
 <body class="d-flex h-100 text-center text-white bg-dark">
     
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
@@ -62,50 +117,11 @@
                 - Total Amount of carbohydrates consumed
              -->
             
-             <!-- Large modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
-
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <form class="mt-3">
-                        <div class="row">
-                          <div class="col">
-                            <input type="text" class="form-control" placeholder="Week">
-                          </div>
-                          <div class="col">
-                            <input type="text" class="form-control" placeholder="Total Calories">
-                          </div>
-                          <div class="col">
-                            <input type="text" class="form-control" placeholder="Total Sleep (in minutes)">
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <input type="text" class="form-control" placeholder="Total Amount of sets for chest done above 70% 1RM">
-                          </div>
-                          <div class="col">
-                            <input type="text" class="form-control" placeholder="Total Amount of sets for shoulders done above 70% 1RM">
-                          </div>
-                          <div class="col">
-                            <input type="text" class="form-control" placeholder="Total Amount of sets for triceps done above 70% 1RM">
-                          </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                              <input type="text" class="form-control" placeholder="Total Amount of protein consumed (grams)">
-                            </div>
-                            <div class="col">
-                              <input type="text" class="form-control" placeholder="Total Amount of carbs consumed (grams)"">
-                            </div>
-                            <div class="col">
-                                <button type="Submit" class="btn btn-secondary fw-bold border-white bg-white">Add New Entry</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            </div>
+             <!-- Begin modal button -->
+             <button type="button" class="btn btn-secondary fw-bold border-white bg-white mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Add New Entry
+            </button>
+            <!-- End Modal button -->
             <footer class="mt-auto text-white-50">
                 <p>Created by <a href="https://ianboldea.com/" class="text-white">Ian Boldea</a>, &copy; 2022</p>
             </footer>
@@ -126,6 +142,8 @@
     </div>
     <script src="{% static 'authentication/feather.min.js' %}"></script>
     <script src="{% static 'authentication/Chart.min.js' %}"></script>
+    <script src="{% static 'authentication/date_fns.min.js' %}"></script>
+    <script src="{% static 'authentication/chartjs-adapter-date-fns.bundle.min.js' %}"></script>
     <script src="{% static 'authentication/dashboard.js' %}"></script>
 </body>
     

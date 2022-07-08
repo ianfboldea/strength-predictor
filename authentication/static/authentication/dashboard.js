@@ -1,9 +1,22 @@
 /* globals Chart:false, feather:false */
 
+function loadJson(selector) {
+  return JSON.parse(document.querySelector(selector).getAttribute('data-json'))
+}
+
 (() => {
   'use strict'
 
   feather.replace({ 'aria-hidden': 'true' })
+
+  const timeFormat = 'DD/MM/YYYY'
+  const jsonData = loadJson('#jsonData')
+  const dataVals = jsonData.map(item => ({
+    y: item.bench_max,
+    x: (new Date(item.end_date)).toLocaleDateString('en-US')
+  }))
+
+  console.log(dataVals)
 
   // Graphs
   const ctx = document.getElementById('myChart')
@@ -12,25 +25,8 @@
   const myChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: [
-        '5/22-5/28',
-        '5/29-6/4',
-        '6/5-6/11',
-        '6/12-6/18',
-        '6/19-6/25',
-        '6/26-7/2',
-        '7/3-7/9'
-      ],
       datasets: [{
-        data: [
-          225,
-          225,
-          230,
-          235,
-          235,
-          235,
-          245
-        ],
+        data: dataVals,
         lineTension: 0,
         backgroundColor: 'transparent',
         borderColor: '#007bff',
@@ -40,11 +36,23 @@
     },
     options: {
       scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
+        x: {
+          type: 'time',
+          displayFormats: {
+            'millisecond': 'MMM DD',
+            'second': 'MMM DD',
+            'minute': 'MMM DD',
+            'hour': 'MMM DD',
+            'day': 'MMM DD',
+            'week': 'MMM DD',
+            'month': 'MMM DD',
+            'quarter': 'MMM DD',
+            'year': 'MMM DD',
+          },
+          time: {
+            format: timeFormat,
           }
-        }]
+        },
       },
       legend: {
         display: false
