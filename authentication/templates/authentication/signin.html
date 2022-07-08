@@ -1,0 +1,32 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'authentication/signinhelper.css' %}">
+<!-- Custom styles for this template -->
+<link rel="stylesheet" type="text/css" href="{% static 'authentication/signin.css' %}">
+<body class="text-center bg-dark text-light">
+    <main class="form-signin w-100 m-auto" class="text-center">
+        {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Alert! </strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        <form action="{% url 'authentication:signin' %}" method="post">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating">
+                <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Username">
+                <label for="floatingInput" class="text-dark">Username</label>
+            </div>
+            <div class="form-floating">
+                <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword" class="text-dark">Password</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+        </form>
+    </main>
+</body>
