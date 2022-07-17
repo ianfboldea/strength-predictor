@@ -4,24 +4,25 @@ function loadJson(selector) {
   return JSON.parse(document.querySelector(selector).getAttribute('data-json'))
 }
 
+function newDate(days) {
+  return moment().add(days, 'd');
+}
+
 (() => {
   'use strict'
 
   feather.replace({ 'aria-hidden': 'true' })
 
-  const timeFormat = 'DD/MM/YYYY'
+  const user = document.querySelector('#userData').getAttribute('data-json')
   const jsonData = loadJson('#jsonData')
-  const dataVals = jsonData.map(item => ({
-    y: item.bench_max,
-    x: (new Date(item.end_date)).toLocaleDateString('en-US')
-  }))
 
-  console.log(dataVals)
+  const filteredData = jsonData.filter(item => item.user == user)
+  const dataVals = filteredData.map(item => ({x: new Date(item.end_date).getTime(), y: item.bench_max}))
 
   // Graphs
   const ctx = document.getElementById('myChart')
   // eslint-disable-next-line no-unused-vars
-  Chart.defaults.global.defaultFontColor = "#fff";
+  Chart.defaults.global.defaultFontColor = "#fff"
   const myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -36,23 +37,22 @@ function loadJson(selector) {
     },
     options: {
       scales: {
-        x: {
+        xAxes: [{
           type: 'time',
-          displayFormats: {
-            'millisecond': 'MMM DD',
-            'second': 'MMM DD',
-            'minute': 'MMM DD',
-            'hour': 'MMM DD',
-            'day': 'MMM DD',
-            'week': 'MMM DD',
-            'month': 'MMM DD',
-            'quarter': 'MMM DD',
-            'year': 'MMM DD',
-          },
           time: {
-            format: timeFormat,
+            displayFormats: {
+               'millisecond': 'MMM dd',
+              'second': 'MMM dd',
+              'minute': 'MMM dd',
+              'hour': 'MMM dd',
+              'day': 'MMM dd',
+              'week': 'MMM dd',
+              'month': 'MMM dd',
+              'quarter': 'MMM dd',
+              'year': 'MMM dd',
+            }
           }
-        },
+        }],
       },
       legend: {
         display: false
